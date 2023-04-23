@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 def home(request):
     return render(request,'main.html')
@@ -26,18 +26,17 @@ def signin(request):
    if request.method == 'POST':
         username = request.POST.get('username')
         password_1 = request.POST.get('password1')
-        user = authenticate()
-
-       
-
-
-
-
-
-
-
+        user = authenticate(username = username,password=password_1)
+        if user != None:
+            login(request,user)
+            
+            return render(request,"homepage.html")
+        else:
+            messages.error(request,"bad cerdentials")
 
    return render(request,'signin.html')    
 
 def signout(request):
-    pass
+    
+    logout(request)
+    return redirect('home')

@@ -19,7 +19,7 @@ def signup(request):
          myuser.lname = last_name
          myuser.save() 
          messages.success(request, "Account created")
-         return render(request,"signin.html")
+         return render(request,"signin")
         if User.objects.filter(username = username).first():
          messages.error(request, "This username is already taken")
         else:

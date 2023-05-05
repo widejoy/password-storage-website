@@ -13,18 +13,15 @@ def signup(request):
         last_name = request.POST.get('last_name')
         password_1 = request.POST.get('password1')
         password_2 = request.POST.get('password2')
-        if password_1==password_2:
+        if(password_1==password_2):
          myuser = User.objects.create_user(username,email,password_1)
          myuser.fname = first_name
          myuser.lname = last_name
          myuser.save() 
          messages.success(request, "Account created")
-         return render(request,"signin")
-        if User.objects.filter(username = username).first():
-         messages.error(request, "This username is already taken")
+         return redirect('signin')
         else:
-            messages.error(request, "password is not equal")
-            
+            messages.error(request, "passwords dont match")
 
     return render(request,'signup.html')
 def signin(request):
@@ -46,3 +43,7 @@ def signout(request):
     
     logout(request)
     return redirect('home')
+
+
+def homepage(request):
+    return render(request,"homepage.html")
